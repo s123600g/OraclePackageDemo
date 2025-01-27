@@ -1,4 +1,4 @@
-﻿namespace OracleStartProgram;
+﻿namespace OracleDbStartProgram;
 
 class Program
 {
