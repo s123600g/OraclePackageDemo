@@ -1,10 +1,18 @@
+-- Creating a type for DEPARTMENTS table
+CREATE OR REPLACE TYPE t_department AS OBJECT (
+  dept_no    NUMBER,
+  name       VARCHAR2(50),
+  location   VARCHAR2(50)
+);
+/
+
 -- Package specification for DEPARTMENTS CRUD operations
 CREATE OR REPLACE PACKAGE pkg_departments IS
   -- Procedure to create a new department
   PROCEDURE create_department(p_department IN t_department);
 
   -- Function to read department details
-  FUNCTION get_department(p_dept_no IN NUMBER DEFAULT NULL) RETURN SYS_REFCURSOR;
+  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR;
 
   -- Procedure to update department details
   PROCEDURE update_department(p_department IN t_department);
@@ -22,16 +30,13 @@ CREATE OR REPLACE PACKAGE BODY pkg_departments IS
     VALUES (p_department.dept_no, p_department.name, p_department.location);
   END create_department;
 
-  FUNCTION get_department(p_dept_no IN NUMBER DEFAULT NULL) RETURN SYS_REFCURSOR IS
+  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR IS
     v_cursor SYS_REFCURSOR;
   BEGIN
-    IF p_dept_no IS NULL THEN
-      OPEN v_cursor FOR
-        SELECT * FROM DEPARTMENTS;
-    ELSE
-      OPEN v_cursor FOR
-        SELECT * FROM DEPARTMENTS WHERE DEPT_NO = p_dept_no;
-    END IF;
+    OPEN v_cursor FOR
+      SELECT *
+      FROM DEPARTMENTS
+      WHERE DEPT_NO = p_dept_no;
     RETURN v_cursor;
   END get_department;
 

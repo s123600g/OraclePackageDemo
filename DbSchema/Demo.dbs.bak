@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Oracle" database="Oracle" id="Oracle-6c2" >
+	<schema name="DEMO" >
+		<udt name="T_DEPARTMENT" udt_java_type="12" udt_precision="NONE" >
+			<udt_script><![CDATA[CREATE OR REPLACE EDITIONABLE TYPE "DEMO"."T_DEPARTMENT" AS OBJECT (
+  dept_no    NUMBER,
+  name       VARCHAR2(50),
+  location   VARCHAR2(50)
+);]]></udt_script>
+		</udt>
+		<table name="DEPARTMENTS" row_count="0" >
+			<column name="DEPT_NO" type="NUMBER" jt="2" mandatory="y" />
+			<column name="NAME" type="VARCHAR2" length="50" jt="12" mandatory="y" />
+			<column name="LOCATION" type="VARCHAR2" length="50" jt="12" />
+			<index name="PK_DEPARTMENTS" unique="PRIMARY_KEY" >
+				<column name="DEPT_NO" />
+			</index>
+		</table>
+		<procedure name="CREATE_DEPARTMENT" id="Procedure-4b6" isSystem="false" params_known="y" >
+			<comment><![CDATA[Packaged procedure]]></comment>
+			<input_param name="P_DEPARTMENT" jt="2002" type="DEMO.T_DEPARTMENT" inOut="1" />
+		</procedure>
+		<procedure name="DELETE_DEPARTMENT" id="Procedure-17be" isSystem="false" params_known="y" >
+			<comment><![CDATA[Packaged procedure]]></comment>
+			<input_param name="P_DEPT_NO" jt="2" type="NUMBER" inOut="1" />
+		</procedure>
+		<procedure name="UPDATE_DEPARTMENT" id="Procedure-233e" isSystem="false" params_known="y" >
+			<comment><![CDATA[Packaged procedure]]></comment>
+			<input_param name="P_DEPARTMENT" jt="2002" type="DEMO.T_DEPARTMENT" inOut="1" />
+		</procedure>
+		<function name="GET_DEPARTMENT" id="Function-82" isSystem="false" params_known="y" >
+			<input_param name="P_DEPT_NO" jt="2" type="NUMBER" inOut="1" />
+			<result_param jt="1111" type="REF CURSOR" />
+		</function>
+		<trigger name="DEPARTMENTS_BIU" table="DEPARTMENTS" id="Trigger-816" isSystem="false" >
+			<string><![CDATA[CREATE OR REPLACE TRIGGER  DEPARTMENTS_BIU
+    BEFORE INSERT OR UPDATE ON DEPARTMENTS
+    FOR EACH ROW
+BEGIN
+    IF INSERTING AND :NEW.DEPT_NO IS NULL THEN
+        :NEW.DEPT_NO := TO_NUMBER(SYS_GUID(), 
+          'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    END IF;
+END]]></string>
+		</trigger>
+	</schema>
+	<layout name="Main Layout" id="Layout-21be" show_relation="columns" >
+		<entity schema="DEMO" name="DEPARTMENTS" color="3986C1" x="48" y="192" />
+		<callout x="48" y="48" pointer="Round" >
+			<comment><![CDATA[This is a layout. Get a better understanding of the schema by
+creating multiple layouts with the same or different tables.
+
+Edit tables by double-clicking the table header, columns, or foreign keys.
+The schema structure will be saved to the design model file.]]></comment>
+		</callout>
+		<script name="DEPARTMENTS" id="Editor-8e" language="SQL" >
+			<string><![CDATA[SELECT
+	DEPT_NO, NAME, LOCATION
+FROM
+	DEMO.DEPARTMENTS S;]]></string>
+		</script>
+		<script name="data_departments" id="Editor-107" language="SQL" >
+			<string><![CDATA[-- 插入測試資料到 DEPARTMENTS 表
+INSERT INTO DEPARTMENTS (DEPT_NO, NAME, LOCATION) VALUES (1, 'HR', 'New York');
+INSERT INTO DEPARTMENTS (DEPT_NO, NAME, LOCATION) VALUES (2, 'Finance', 'London');
+INSERT INTO DEPARTMENTS (DEPT_NO, NAME, LOCATION) VALUES (3, 'IT', 'San Francisco');
+COMMIT;
+]]></string>
+		</script>
+		<script name="exec_create_department" id="Editor-22f2" language="SQL" >
+			<string><![CDATA[-- 測試新增部門
+DECLARE
+  v_department t_department := t_department(4, 'Marketing', 'Boston');
+BEGIN
+  pkg_departments.create_department(v_department);
+  DBMS_OUTPUT.PUT_LINE('Department created successfully');
+END;
+/
+]]></string>
+		</script>
+		<script name="exec_get_department" id="Editor-c51" language="SQL" >
+			<string><![CDATA[-- 測試以部門編號查詢
+DECLARE
+  v_cursor SYS_REFCURSOR;
+  v_dept_no NUMBER;
+  v_name VARCHAR2(50);
+  v_location VARCHAR2(50);
+BEGIN
+  v_cursor := pkg_departments.get_department(2); -- 查詢 DEPT_NO = 2
+  LOOP
+    FETCH v_cursor INTO v_dept_no, v_name, v_location;
+    EXIT WHEN v_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('Dept No: ' || v_dept_no || ', Name: ' || v_name || ', Location: ' || v_location);
+  END LOOP;
+  CLOSE v_cursor;
+END;
+/
+]]></string>
+		</script>
+		<script name="pkg_departments" id="Editor-36a" language="SQL" >
+			<string><![CDATA[-- Creating a type for DEPARTMENTS table
+CREATE OR REPLACE TYPE t_department AS OBJECT (
+  dept_no    NUMBER,
+  name       VARCHAR2(50),
+  location   VARCHAR2(50)
+);
+/
+
+-- Package specification for DEPARTMENTS CRUD operations
+CREATE OR REPLACE PACKAGE pkg_departments IS
+  -- Procedure to create a new department
+  PROCEDURE create_department(p_department IN t_department);
+
+  -- Function to read department details
+  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR;
+
+  -- Procedure to update department details
+  PROCEDURE update_department(p_department IN t_department);
+
+  -- Procedure to delete a department
+  PROCEDURE delete_department(p_dept_no IN NUMBER);
+END pkg_departments;
+/
+
+-- Package body for DEPARTMENTS CRUD operations
+CREATE OR REPLACE PACKAGE BODY pkg_departments IS
+  PROCEDURE create_department(p_department IN t_department) IS
+  BEGIN
+    INSERT INTO DEPARTMENTS (DEPT_NO, NAME, LOCATION)
+    VALUES (p_department.dept_no, p_department.name, p_department.location);
+  END create_department;
+
+  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR IS
+    v_cursor SYS_REFCURSOR;
+  BEGIN
+    OPEN v_cursor FOR
+      SELECT *
+      FROM DEPARTMENTS
+      WHERE DEPT_NO = p_dept_no;
+    RETURN v_cursor;
+  END get_department;
+
+  PROCEDURE update_department(p_department IN t_department) IS
+  BEGIN
+    UPDATE DEPARTMENTS
+    SET NAME = p_department.name,
+        LOCATION = p_department.location
+    WHERE DEPT_NO = p_department.dept_no;
+  END update_department;
+
+  PROCEDURE delete_department(p_dept_no IN NUMBER) IS
+  BEGIN
+    DELETE FROM DEPARTMENTS WHERE DEPT_NO = p_dept_no;
+  END delete_department;
+END pkg_departments;
+/
+]]></string>
+		</script>
+	</layout>
+</project>
