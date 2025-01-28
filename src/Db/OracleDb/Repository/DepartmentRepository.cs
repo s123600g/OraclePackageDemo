@@ -1,12 +1,12 @@
-namespace OracleDb.Dapper.Repository;
+namespace OracleDb.Repository;
 
 using System.Data;
 using global::Dapper;
 using NLog;
 using Oracle.ManagedDataAccess.Client;
-using OracleDb.Dapper.Entity;
-using OracleDb.Dapper.Entity.Udt;
-using OracleDb.Dapper.Helper;
+using OracleDb.Entity;
+using OracleDb.Entity.Udt;
+using OracleDb.Helper;
 
 public class DepartmentRepository : IDepartmentRepository
 {

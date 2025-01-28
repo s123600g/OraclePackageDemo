@@ -1,9 +1,7 @@
-namespace OracleDbStartProgram.Init.Extensions;
+namespace OracleDbStartProgram.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
-using NLog;
-using OracleDb.Dapper;
-using OracleDb.Dapper.Repository;
+using OracleDb.Repository;
 
 public static class RepositoryServiceCollection
 {

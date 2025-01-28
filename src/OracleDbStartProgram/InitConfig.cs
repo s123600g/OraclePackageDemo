@@ -1,10 +1,10 @@
-namespace OracleDbStartProgram.Init;
+namespace OracleDbStartProgram;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using NLog.Extensions.Logging;
-using OracleDbStartProgram.Init.Extensions;
+using OracleDbStartProgram.Extensions;
 
 public class InitConfig
 {

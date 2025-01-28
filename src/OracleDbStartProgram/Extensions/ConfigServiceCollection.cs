@@ -1,8 +1,8 @@
-namespace OracleDbStartProgram.Init.Extensions;
+namespace OracleDbStartProgram.Extensions;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OracleDb.Dapper;
+using OracleDb;
 
 public static class ConfigServiceCollection
 {

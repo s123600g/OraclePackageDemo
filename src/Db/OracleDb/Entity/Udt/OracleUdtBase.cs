@@ -1,4 +1,4 @@
-namespace OracleDb.Dapper.Entity.Udt;
+namespace OracleDb.Entity.Udt;
 
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;

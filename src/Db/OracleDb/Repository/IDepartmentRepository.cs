@@ -1,6 +1,6 @@
-namespace OracleDb.Dapper.Repository;
+namespace OracleDb.Repository;
 
-using OracleDb.Dapper.Entity;
+using OracleDb.Entity;
 
 public interface IDepartmentRepository
 {

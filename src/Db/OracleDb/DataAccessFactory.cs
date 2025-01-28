@@ -1,4 +1,4 @@
-namespace OracleDb.Dapper;
+namespace OracleDb;
 
 using System.Data;
 using global::Dapper;

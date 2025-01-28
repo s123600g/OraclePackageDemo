@@ -1,4 +1,4 @@
-namespace OracleDb.Dapper.Entity;
+namespace OracleDb.Entity;
 
 public class DepartmentEntity
 {

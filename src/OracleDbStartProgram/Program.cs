@@ -1,9 +1,8 @@
 ﻿namespace OracleDbStartProgram;
 
 using Microsoft.Extensions.DependencyInjection;
-using OracleDb.Dapper.Entity;
-using OracleDb.Dapper.Repository;
-using OracleDbStartProgram.Init;
+using OracleDb.Entity;
+using OracleDb.Repository;
 
 class Program
 {
