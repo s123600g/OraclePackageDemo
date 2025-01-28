@@ -24,6 +24,12 @@ class Program
 
     private static async Task RunCreateDepartment()
     {
-        await _departmentRepository.CreateDepartmentAsync(new DepartmentEntity());
+        var input = new DepartmentEntity
+        {
+            Name = "Marketing",
+            Location = "Boston",
+        };
+
+        await _departmentRepository.CreateDepartmentAsync(input);
     }
 }

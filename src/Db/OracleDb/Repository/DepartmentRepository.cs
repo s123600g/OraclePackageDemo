@@ -26,20 +26,12 @@ public class DepartmentRepository : IDepartmentRepository
         // 建立部門 UDT 物件
         var department = new DepartmentUdt
         {
-            DeptNo = 4,
-            Name = "Marketing",
-            Location = "Boston",
+            Name = departmentEntity.Name,
+            Location = departmentEntity.Location,
         };
 
         // 使用 OracleDynamicParameters 管理參數
         var dynamicParameters = new OracleDynamicParameters();
-        // dynamicParameters.Add(
-        //     name: "p_department",
-        //     dbType: OracleDbType.Object,
-        //     direction: ParameterDirection.Input,
-        //     udtTypeName: "t_department", // Oracle 中的 UDT 名稱
-        //     value: department
-        // );
 
         var param = new OracleParameter()
         {

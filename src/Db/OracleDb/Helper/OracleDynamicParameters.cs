@@ -6,7 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 
 public class OracleDynamicParameters : SqlMapper.IDynamicParameters
 {
-    private readonly List<OracleParameter> _parameters = new List<OracleParameter>();
+    private readonly List<OracleParameter> _parameters = [];
 
     public void Add(string name, object value, OracleDbType dbType, ParameterDirection direction, string udtTypeName = null)
     {

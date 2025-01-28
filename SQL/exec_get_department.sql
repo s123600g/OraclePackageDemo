@@ -5,7 +5,7 @@ DECLARE
   v_name VARCHAR2(50);
   v_location VARCHAR2(50);
 BEGIN
-  v_cursor := pkg_departments.get_department(2); -- 查詢 DEPT_NO = 2
+  v_cursor := pkg_departments.get_department(1); -- 查詢 DEPT_NO = 1
   LOOP
     FETCH v_cursor INTO v_dept_no, v_name, v_location;
     EXIT WHEN v_cursor%NOTFOUND;
@@ -13,4 +13,3 @@ BEGIN
   END LOOP;
   CLOSE v_cursor;
 END;
-/
