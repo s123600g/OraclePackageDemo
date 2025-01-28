@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleDbStartProgram", "Ora
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleDb.Dapper", "Db\OracleDb.Dapper\OracleDb.Dapper.csproj", "{AC706B72-B659-49BB-8C82-C487564A8BD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleDbStartProgram.Init", "Lib\OracleDbStartProgram.Init\OracleDbStartProgram.Init.csproj", "{02B70264-DA6C-4C47-A4D8-947506BBE0CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,8 +24,13 @@ Global
 		{AC706B72-B659-49BB-8C82-C487564A8BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC706B72-B659-49BB-8C82-C487564A8BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC706B72-B659-49BB-8C82-C487564A8BD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B70264-DA6C-4C47-A4D8-947506BBE0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B70264-DA6C-4C47-A4D8-947506BBE0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B70264-DA6C-4C47-A4D8-947506BBE0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B70264-DA6C-4C47-A4D8-947506BBE0CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AC706B72-B659-49BB-8C82-C487564A8BD1} = {10E71D12-1C0E-4BE8-89D6-EEB737CDBB02}
+		{02B70264-DA6C-4C47-A4D8-947506BBE0CC} = {98EF68F9-BF65-4A05-9FA7-D652E08DFEC3}
 	EndGlobalSection
 EndGlobal

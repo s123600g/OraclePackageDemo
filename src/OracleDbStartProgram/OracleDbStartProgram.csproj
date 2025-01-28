@@ -7,4 +7,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Db\OracleDb.Dapper\OracleDb.Dapper.csproj" />
+      <ProjectReference Include="..\Lib\OracleDbStartProgram.Init\OracleDbStartProgram.Init.csproj" />
+    </ItemGroup>
+
 </Project>

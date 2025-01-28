@@ -97,6 +97,17 @@ END;
 /
 ]]></string>
 		</script>
+		<script name="exec_update_department" id="Editor-1d8c" language="SQL" >
+			<string><![CDATA[-- 測試更新部門
+DECLARE
+  v_department t_department := t_department(1, 'Human Resources', 'New York City');
+BEGIN
+  pkg_departments.update_department(v_department);
+  DBMS_OUTPUT.PUT_LINE('Department updated successfully');
+END;
+/
+]]></string>
+		</script>
 		<script name="pkg_departments" id="Editor-36a" language="SQL" >
 			<string><![CDATA[-- Creating a type for DEPARTMENTS table
 CREATE OR REPLACE TYPE t_department AS OBJECT (
