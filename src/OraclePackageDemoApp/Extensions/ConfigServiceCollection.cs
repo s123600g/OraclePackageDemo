@@ -1,4 +1,4 @@
-namespace OracleDbStartProgram.Extensions;
+namespace OraclePackageDemoApp.Extensions;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

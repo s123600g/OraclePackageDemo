@@ -1,4 +1,4 @@
-﻿namespace OracleDbStartProgram;
+﻿namespace OraclePackageDemoApp;
 
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
@@ -23,8 +23,8 @@ class Program
 
         try
         {
-            //// 取得全部資料
-            // await RunGetDepartmentsAsync();
+            // 取得全部資料
+            await RunGetDepartmentsAsync();
 
             //// 取得單一資料
             // await RunGetSingleDepartmentAsync(3);
