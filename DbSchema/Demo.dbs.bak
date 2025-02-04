@@ -114,11 +114,6 @@ CREATE OR REPLACE PACKAGE pkg_departments IS
         p_department IN OUT t_department
     );
 
-  -- Function to read department details
-    FUNCTION get_department (
-        p_dept_no IN NUMBER
-    ) RETURN SYS_REFCURSOR;
-
   -- Procedure to update department details
     PROCEDURE update_department (
         p_department IN t_department
@@ -147,21 +142,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_departments IS
 
     END create_department;
 
-    FUNCTION get_department (
-        p_dept_no IN NUMBER
-    ) RETURN SYS_REFCURSOR IS
-        v_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_cursor FOR SELECT
-                                                *
-                                            FROM
-                                                demo.departments
-                          WHERE
-                              dept_no = p_dept_no;
-
-        RETURN v_cursor;
-    END get_department;
-
     PROCEDURE update_department (
         p_department IN t_department
     ) IS
@@ -189,7 +169,7 @@ END pkg_departments;
 /]]></string>
 		</script>
 		<browser id="Browse-22d3" name="DEPARTMENTS" confirm_updates="y" >
-			<browse_table schema="DEMO" entity="DEPARTMENTS" x="20" y="20" width="496" height="486" />
+			<browse_table schema="DEMO" entity="DEPARTMENTS" x="20" y="20" width="1235" height="327" />
 		</browser>
 	</layout>
 </project>
