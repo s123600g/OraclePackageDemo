@@ -77,25 +77,6 @@ BEGIN
   DBMS_OUTPUT.PUT_LINE('Department deleted successfully.');
 END;]]></string>
 		</script>
-		<script name="exec_get_department" id="Editor-c51" language="SQL" >
-			<string><![CDATA[-- 測試以部門編號查詢
-DECLARE
-  v_cursor SYS_REFCURSOR;
-  v_dept_no NUMBER;
-  v_name VARCHAR2(50);
-  v_location VARCHAR2(50);
-BEGIN
-  v_cursor := pkg_departments.get_department(1); -- 查詢 DEPT_NO = 1
-  LOOP
-    FETCH v_cursor INTO v_dept_no, v_name, v_location;
-    EXIT WHEN v_cursor%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE('Dept No: ' || v_dept_no || ', Name: ' || v_name || ', Location: ' || v_location);
-  END LOOP;
-  CLOSE v_cursor;
-END;
-
-]]></string>
-		</script>
 		<script name="exec_update_department" id="Editor-1d8c" language="SQL" >
 			<string><![CDATA[-- 測試更新部門
 DECLARE
@@ -113,11 +94,6 @@ CREATE OR REPLACE PACKAGE pkg_departments IS
     PROCEDURE create_department (
         p_department IN OUT t_department
     );
-
-  -- Function to read department details
-    FUNCTION get_department (
-        p_dept_no IN NUMBER
-    ) RETURN SYS_REFCURSOR;
 
   -- Procedure to update department details
     PROCEDURE update_department (
@@ -146,21 +122,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_departments IS
                    p_department.location ) RETURNING dept_no INTO p_department.dept_no;
 
     END create_department;
-
-    FUNCTION get_department (
-        p_dept_no IN NUMBER
-    ) RETURN SYS_REFCURSOR IS
-        v_cursor SYS_REFCURSOR;
-    BEGIN
-        OPEN v_cursor FOR SELECT
-                                                *
-                                            FROM
-                                                demo.departments
-                          WHERE
-                              dept_no = p_dept_no;
-
-        RETURN v_cursor;
-    END get_department;
 
     PROCEDURE update_department (
         p_department IN t_department
