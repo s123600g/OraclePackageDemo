@@ -51,16 +51,14 @@ The schema structure will be saved to the design model file.]]></comment>
 	NAME                 VARCHAR2(50)   NOT NULL,
 	LOCATION             VARCHAR2(50)   ,
 	CONSTRAINT PK_DEPARTMENTS PRIMARY KEY ( DEPT_NO ) 
- );
-]]></string>
+ );]]></string>
 		</script>
 		<script name="data_departments" id="Editor-107" language="SQL" >
 			<string><![CDATA[-- 插入測試資料到 DEPARTMENTS 表
 INSERT INTO DEPARTMENTS (NAME, LOCATION) VALUES ('HR', 'New York');
 INSERT INTO DEPARTMENTS (NAME, LOCATION) VALUES ('Finance', 'London');
 INSERT INTO DEPARTMENTS (NAME, LOCATION) VALUES ('IT', 'San Francisco');
-COMMIT;
-]]></string>
+COMMIT;]]></string>
 		</script>
 		<script name="exec_create_department" id="Editor-22f2" language="SQL" >
 			<string><![CDATA[-- 測試插入部門並自動生成 DEPT_NO
@@ -70,7 +68,6 @@ BEGIN
   pkg_departments.create_department(v_department);
   DBMS_OUTPUT.PUT_LINE('Created Department: Dept No = ' || v_department.dept_no || ', Name = ' || v_department.name || ', Location = ' || v_department.location);
 END;
-
 ]]></string>
 		</script>
 		<script name="exec_delete_department" id="Editor-264a" language="SQL" >
@@ -78,8 +75,7 @@ END;
 BEGIN
   pkg_departments.delete_department(1); -- 刪除 DEPT_NO = 1 的部門
   DBMS_OUTPUT.PUT_LINE('Department deleted successfully.');
-END;
-]]></string>
+END;]]></string>
 		</script>
 		<script name="exec_get_department" id="Editor-c51" language="SQL" >
 			<string><![CDATA[-- 測試以部門編號查詢
@@ -111,63 +107,86 @@ END;
 ]]></string>
 		</script>
 		<script name="pkg_departments" id="Editor-36a" language="SQL" >
-			<string><![CDATA[-- Creating a type for DEPARTMENTS table
-CREATE OR REPLACE TYPE t_department AS OBJECT (
-  dept_no    NUMBER,
-  name       VARCHAR2(50),
-  location   VARCHAR2(50)
-);
-/
-
--- Package specification for DEPARTMENTS CRUD operations
+			<string><![CDATA[-- Package specification for DEPARTMENTS CRUD operations
 CREATE OR REPLACE PACKAGE pkg_departments IS
   -- Procedure to create a new department
-  PROCEDURE create_department(p_department IN OUT t_department);
+    PROCEDURE create_department (
+        p_department IN OUT t_department
+    );
 
   -- Function to read department details
-  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION get_department (
+        p_dept_no IN NUMBER
+    ) RETURN SYS_REFCURSOR;
 
   -- Procedure to update department details
-  PROCEDURE update_department(p_department IN t_department);
+    PROCEDURE update_department (
+        p_department IN t_department
+    );
 
   -- Procedure to delete a department
-  PROCEDURE delete_department(p_dept_no IN NUMBER);
+    PROCEDURE delete_department (
+        p_dept_no IN NUMBER
+    );
+
 END pkg_departments;
 /
 
 -- Package body for DEPARTMENTS CRUD operations
 CREATE OR REPLACE PACKAGE BODY pkg_departments IS
-  PROCEDURE create_department(p_department IN OUT t_department) IS
-  BEGIN
-    INSERT INTO DEMO.DEPARTMENTS (NAME, LOCATION)
-    VALUES (p_department.name, p_department.location)
-    RETURNING DEPT_NO INTO p_department.dept_no;
-  END create_department;
 
-  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR IS
-    v_cursor SYS_REFCURSOR;
-  BEGIN
-    OPEN v_cursor FOR
-      SELECT *
-      FROM DEMO.DEPARTMENTS
-      WHERE DEPT_NO = p_dept_no;
-    RETURN v_cursor;
-  END get_department;
+    PROCEDURE create_department (
+        p_department IN OUT t_department
+    ) IS
+    BEGIN
+        INSERT INTO demo.departments (
+            name,
+            location
+        ) VALUES ( p_department.name,
+                   p_department.location ) RETURNING dept_no INTO p_department.dept_no;
 
-  PROCEDURE update_department(p_department IN t_department) IS
-  BEGIN
-    UPDATE DEMO.DEPARTMENTS
-    SET NAME = p_department.name,
-        LOCATION = p_department.location
-    WHERE DEPT_NO = p_department.dept_no;
-  END update_department;
+    END create_department;
 
-  PROCEDURE delete_department(p_dept_no IN NUMBER) IS
-  BEGIN
-    DELETE FROM DEMO.DEPARTMENTS WHERE DEPT_NO = p_dept_no;
-  END delete_department;
+    FUNCTION get_department (
+        p_dept_no IN NUMBER
+    ) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR SELECT
+                                                *
+                                            FROM
+                                                demo.departments
+                          WHERE
+                              dept_no = p_dept_no;
+
+        RETURN v_cursor;
+    END get_department;
+
+    PROCEDURE update_department (
+        p_department IN t_department
+    ) IS
+    BEGIN
+        UPDATE demo.departments
+        SET
+            name = p_department.name,
+            location = p_department.location
+        WHERE
+            dept_no = p_department.dept_no;
+
+    END update_department;
+
+    PROCEDURE delete_department (
+        p_dept_no IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM demo.departments
+        WHERE
+            dept_no = p_dept_no;
+
+    END delete_department;
+
 END pkg_departments;
-]]></string>
+/]]></string>
 		</script>
 		<browser id="Browse-22d3" name="DEPARTMENTS" confirm_updates="y" >
 			<browse_table schema="DEMO" entity="DEPARTMENTS" x="20" y="20" width="496" height="486" />
