@@ -189,7 +189,7 @@ END pkg_departments;
 /]]></string>
 		</script>
 		<browser id="Browse-22d3" name="DEPARTMENTS" confirm_updates="y" >
-			<browse_table schema="DEMO" entity="DEPARTMENTS" x="20" y="20" width="496" height="486" />
+			<browse_table schema="DEMO" entity="DEPARTMENTS" x="20" y="20" width="1235" height="327" />
 		</browser>
 	</layout>
 </project>
