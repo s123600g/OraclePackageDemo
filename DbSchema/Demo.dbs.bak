@@ -167,7 +167,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_departments IS
     DELETE FROM DEMO.DEPARTMENTS WHERE DEPT_NO = p_dept_no;
   END delete_department;
 END pkg_departments;
-/
 ]]></string>
 		</script>
 		<browser id="Browse-22d3" name="DEPARTMENTS" confirm_updates="y" >
