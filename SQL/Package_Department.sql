@@ -11,9 +11,6 @@ CREATE OR REPLACE PACKAGE pkg_departments IS
   -- Procedure to create a new department
   PROCEDURE create_department(p_department IN OUT t_department);
 
-  -- Function to read department details
-  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR;
-
   -- Procedure to update department details
   PROCEDURE update_department(p_department IN t_department);
 
@@ -30,16 +27,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_departments IS
     VALUES (p_department.name, p_department.location)
     RETURNING DEPT_NO INTO p_department.dept_no;
   END create_department;
-
-  FUNCTION get_department(p_dept_no IN NUMBER) RETURN SYS_REFCURSOR IS
-    v_cursor SYS_REFCURSOR;
-  BEGIN
-    OPEN v_cursor FOR
-      SELECT *
-      FROM DEMO.DEPARTMENTS
-      WHERE DEPT_NO = p_dept_no;
-    RETURN v_cursor;
-  END get_department;
 
   PROCEDURE update_department(p_department IN t_department) IS
   BEGIN
