@@ -7,12 +7,15 @@ using Oracle.ManagedDataAccess.Types;
 [OracleCustomTypeMapping("T_DEPARTMENT")]
 public class DepartmentUdt : OracleUdtBase<DepartmentUdt>
 {
+    // 對應 Oracle 的 UDT 欄位
     [OracleObjectMapping("DEPT_NO")]
     public decimal? DeptNo { get; set; }
 
+    // 對應 Oracle 的 UDT 欄位
     [OracleObjectMapping("NAME")]
     public string Name { get; set; }
 
+    // 對應 Oracle 的 UDT 欄位
     [OracleObjectMapping("LOCATION")]
     public string Location { get; set; }
 

@@ -26,6 +26,16 @@ public class OracleDynamicParameters : SqlMapper.IDynamicParameters
         _parameters.Add(parameter);
     }
 
+    public void Add(string name, OracleDbType dbType, ParameterDirection direction)
+    {
+        var parameter = new OracleParameter(name, dbType)
+        {
+            Direction = direction
+        };
+
+        _parameters.Add(parameter);
+    }
+
     public void Add(OracleParameter parameter)
     {
         _parameters.Add(parameter);
